@@ -21,11 +21,12 @@ repositories {
 
 dependencies {
     testCompile 'junit:junit:4.+'
+    compile 'io.undertow:undertow-core:1.4.12.Final'
 }
 
 // configure sonar (using secure ENV var from travis)
-sonarRunner {
-    sonarProperties {
+sonarqube {
+    properties {
         property "sonar.organization", "duckasteroid-github"
         property "sonar.host.url", "https://sonarcloud.io"
         property "sonar.login", "$System.env.SONAR_LOGIN"
