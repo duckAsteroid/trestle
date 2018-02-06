@@ -20,8 +20,15 @@ repositories {
 }
 
 dependencies {
+    compile 'org.slf4j:slf4j-api:1.7.25'
+    compile 'org.glassfish.jersey.core:jersey-client:2.26'
+    compile 'org.nanohttpd:nanohttpd:2.3.1'
+    compile 'commons-io:commons-io:2.6'
+
     testCompile 'junit:junit:4.+'
-    compile 'io.undertow:undertow-core:1.4.12.Final'
+    testCompile 'org.json:json:20171018'
+    testRuntime 'org.slf4j:slf4j-simple:1.7.25'
+    testRuntime 'org.glassfish.jersey.inject:jersey-hk2:2.26'
 }
 
 // configure sonar (using secure ENV var from travis)

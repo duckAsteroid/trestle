@@ -1,0 +1,16 @@
+{
+  "id": 2,
+  "category": {
+    "id": 2,
+    "name": "fish"
+  },
+  "name": "Dave",
+  "photoUrls": [ "dave.jpg" ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "Goldfish"
+    }
+  ],
+  "status": "available"
+}

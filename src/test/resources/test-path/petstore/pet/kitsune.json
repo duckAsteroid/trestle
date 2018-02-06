@@ -1,0 +1,16 @@
+{
+  "id": 0,
+  "category": {
+    "id": 0,
+    "name": "cat"
+  },
+  "name": "Kitsune",
+  "photoUrls": [ "kitsune.jpg" ],
+  "tags": [
+    {
+      "id": 0,
+      "name": "Bengal"
+    }
+  ],
+  "status": "available"
+}

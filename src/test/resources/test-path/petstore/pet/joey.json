@@ -1,0 +1,16 @@
+{
+  "id": 1,
+  "category": {
+    "id": 1,
+    "name": "dog"
+  },
+  "name": "Joey",
+  "photoUrls": [ "joey-sleeping.jpg", "joey-with-ball.jpg"],
+  "tags": [
+    {
+      "id": 1,
+      "name": "Labrador"
+    }
+  ],
+  "status": "available"
+}
