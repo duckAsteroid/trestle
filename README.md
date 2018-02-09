@@ -22,16 +22,9 @@ When directory includes special "LIST" signifier then API provides enumeration o
 IDs are expected to be those of docs.
 
 ```text
-domains/{special}.json - indicates list by ID
-domains/partonomy.json
-domains/partonomy/ontology.json
-domains/partonomy/vocabs/{special}.json - list by ID
-domains/partonomy/vocabs/svr.json
-domains/partonomy/vocabs/svr/{special}.json - list by ID
-domains/partonomy/vocabs/svr/A1234.json
-domains/partonomy/vocabs/svr/B2345.json
-domains/partonomy/vocabs/pil.json
-domains/other.json
+petstore/pets/{special}.json - indicates list by ID
+petstore/pets.json
+petstore/pets/dave.json
 ```
 
 Download
