@@ -29,7 +29,11 @@ public class TrestleHandler extends NanoHTTPD {
 
     @Override
     public Response serve(IHTTPSession session) {
-        Path path = Path.parse(session.getUri());
+        String uri = session.getUri();
+        while (uri.startsWith("/")) {
+            uri = uri.substring(1);
+        }
+        Path path = Path.parse(uri);
         NanoHTTPD.Method method = session.getMethod();
         switch (method) {
             case GET:
@@ -60,6 +64,7 @@ public class TrestleHandler extends NanoHTTPD {
             String mimeType = resource.getMimeType(MIME_TYPES);
             try {
                 Response response = newChunkedResponse(Response.Status.ACCEPTED, mimeType, resource.getData());
+                response.setStatus(Response.Status.OK);
                 return response;
             }
             catch (IOException e) {

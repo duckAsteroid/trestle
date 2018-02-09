@@ -39,7 +39,7 @@ public class ClassPathResources implements ResourceLocator {
             final int extSplit = file.lastIndexOf('.');
             if (extSplit > 0) {
                 final String ext = file.substring(extSplit + 1 );
-                if (mimeTypes.containsKey(ext)) {
+                if (mimeTypes != null && mimeTypes.containsKey(ext)) {
                     return mimeTypes.get(ext);
                 }
             }

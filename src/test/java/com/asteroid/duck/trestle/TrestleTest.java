@@ -44,7 +44,7 @@ public class TrestleTest {
         JSONObject jsonObject = new JSONObject(entity);
         assertNotNull(jsonObject);
         assertTrue(jsonObject.has("id"));
-        assertEquals("2", jsonObject.get("id"));
+        assertEquals(2, jsonObject.get("id"));
     }
 
 

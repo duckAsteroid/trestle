@@ -1,23 +1,27 @@
 package com.asteroid.duck.trestle.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Path {
-    private final static Path EMPTY = new Path(null, "");
-    public final static Path ROOT_PATH = new Path(null, "/");
+    public final static Path ROOT_PATH = new Path(null, null) {
+        @Override
+        public boolean isRoot() {
+            return true;
+        }
+
+        @Override
+        public synchronized String toString() {
+            return "";
+        }
+    };
 
     private final Path parent;
     private final String segment;
 
     private transient String toStringCache = null;
 
-    public Path(Path parent, String segment) {
-        if (segment == null) {
-            throw new IllegalArgumentException("Segment cannot be null");
-        }
+    private Path(Path parent, String segment) {
         this.parent = parent;
         this.segment = segment;
     }
@@ -28,10 +32,15 @@ public class Path {
 
     public static Path parse(String segments) {
         String[] split = segments.split("/");
-        Path result = segments.startsWith("/") ? ROOT_PATH : EMPTY;
+        Path result = segments.startsWith("/") ? ROOT_PATH : null;
         for (String seg : split) {
             if (seg != null && seg.length() > 0) {
-                result = result.newChild(seg);
+                if (result == null) {
+                    result = new Path(null, seg);
+                }
+                else {
+                    result = result.newChild(seg);
+                }
             }
         }
         return result;
@@ -45,7 +54,19 @@ public class Path {
         return parent;
     }
 
+    public boolean isRoot() {
+        return false;
+    }
+
+    public boolean isRelative() {
+        Path root = asList().get(0);
+        return !root.isRoot();
+    }
+
     public Path newChild(String segment) {
+        if (segment.contains("/")) {
+            throw new IllegalArgumentException("Segment name cannot contain '/'");
+        }
         return new Path(this, segment);
     }
 
@@ -55,41 +76,49 @@ public class Path {
     }
 
     public Path append(Path relative) {
+        if (!relative.isRelative()) {
+            throw new IllegalArgumentException("Relative path required to append");
+        }
         Path result = this;
-        for (String seg : relative.asList()) {
+        for (String seg : relative.asSegmentList()) {
             result = result.newChild(seg);
         }
         return result;
     }
 
-    public List<String> asList() {
+    public List<Path> asList() {
         if (parent != null) {
-            List<String> parentList = parent.asList();
-            ArrayList<String> copy = new ArrayList<>(parentList.size() + 1);
+            List<Path> parentList = parent.asList();
+            ArrayList<Path> copy = new ArrayList<>(parentList.size() + 1);
             copy.addAll(parentList);
-            copy.add(segment);
+            copy.add(this);
             return Collections.unmodifiableList(copy);
         }
-        else if (segment.length() > 0) {
-            return Collections.singletonList(segment);
+        else if (segment == null || segment.length() > 0) {
+            return Collections.singletonList(this);
         }
         else {
             return Collections.emptyList();
         }
     }
 
+    public List<String> asSegmentList() {
+        return asList().stream()
+                .map(path -> path.segment)
+                .filter(Objects::nonNull)
+                .collect(Collectors.toList());
+    }
+
     @Override
     public synchronized String toString() {
         if (toStringCache == null) {
             StringBuilder sb = new StringBuilder();
-            Iterator<String> iter = asList().iterator();
-            while(iter.hasNext()) {
-                final String seg = iter.next();
-                sb.append(seg);
-                if (iter.hasNext()) {
-                    sb.append('/');
-                }
+            if (parent != null) {
+                String parentString = parent.toString();
+                sb.append(parentString);
+                sb.append('/');
             }
+            sb.append(segment);
             toStringCache = sb.toString();
         }
         return toStringCache;
