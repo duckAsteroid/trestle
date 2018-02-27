@@ -2,7 +2,7 @@ trestle
 ===========
 A mocking framework for REST APIs
 
-![Build status](https://travis-ci.org/duckAsteroid/trestle.svg?branch=master)
+[![Build status](https://travis-ci.org/duckAsteroid/trestle.svg?branch=master)](https://travis-ci.org/duckAsteroid/trestle)
 
 Getting Started
 ---------------

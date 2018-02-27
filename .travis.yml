@@ -1,4 +1,13 @@
 language: java
+jdk:
+  - oraclejdk9
 script: "./gradlew --stacktrace :bintrayUpload :sonarqube"
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
 env:
   secure: Zxp61yxxPbR8ISmONo/hyRPUbYuGCpdLvIH0CeLtUOG4zpGp3uA1TvGl4TAdT/PjltNqyGgKNaVbmLvTWSUYqVPrsLbDG8mFFzmtZwJlOacVOgakEBQjpxjjdaIX5b53Q1hHp/gu5vP/h2NQvNYk3JGfZlK4cE0REXD2EDL4Ri0JG1BVlNUpwc6qSUhoJ3lJs69TZGYfCEQckk6/J8HYtK9G0QhvkAGk90tmdjOUUqhIZXrokkUGdgcJ9RXtJmDgwnhIQDTVkWtlkVTyt1L1jfw7dYaW08gxR7fpNi5PF5aV14O4VbeX11ifjMBO8lx3OfVQ4MyQips2pkjdStbGds+40/+TfS7csTn8Y3MTPwKzfuWDJWn9U7ayZiliUhOqfC3JsMF8Y0UHymAtBIgStjDgF2dDDvKAq1fdM74n+ZR1ps1hpovEPo+PUOSIlLO/thKR0kkQH52Zw0j2UbGlELQKWIWRbvt0SHiK2w95IcbmXG5yrgZZslFe+62YXc4dX3qgNyh9p60Xim1HGMczVOEdXDX0l32vR5nfNGlrVGKElMpIf73fa9Brj7YbskWSZ+PbTA00AUI1mPERNuPDJTAfx6FOy30WP1rINZJDxiV53eSuRrwIi08wlo/496QxNmSmJ4OuPThkM2N4P1yCaiBRXAUdJWhLBmsBEkuEanI=
