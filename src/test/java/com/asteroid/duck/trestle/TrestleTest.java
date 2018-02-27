@@ -3,6 +3,7 @@ package com.asteroid.duck.trestle;
 import com.asteroid.duck.trestle.impl.Path;
 import com.asteroid.duck.trestle.res.ClassPathResources;
 import org.json.JSONObject;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -50,6 +51,20 @@ public class TrestleTest {
 
     @Test
     public void testGetOrder() {
+        WebTarget petEndpoint = petStoreEndpoint.path("store/order/1.json");
+        Response response = petEndpoint.request().get();
+        assertNotNull(response);
+        assertEquals(200, response.getStatus());
+        String entity = response.readEntity(String.class);
+        assertTrue(entity.length() > 0);
+        JSONObject jsonObject = new JSONObject(entity);
+        assertNotNull(jsonObject);
+        assertTrue(jsonObject.has("id"));
+        assertEquals(1, jsonObject.get("id"));
+    }
 
+    @After
+    public void dispose() throws IOException {
+        subject.close();
     }
 }
