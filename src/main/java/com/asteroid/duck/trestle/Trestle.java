@@ -29,7 +29,7 @@ public class Trestle implements Closeable {
      */
     public Trestle(int port, ResourceLocator resourceLocator, boolean readonly) throws URISyntaxException, IOException {
         // FIXME Implement write cache
-        WriteableResourceLocator writeLocator = (readonly) ? null : null;
+        WriteableResourceLocator writeLocator = (readonly) ? null : new WriteableResourceLocator();
         this.rootHandler = new TrestleHandler("localhost", port, resourceLocator, writeLocator);
         rootHandler.start();
 

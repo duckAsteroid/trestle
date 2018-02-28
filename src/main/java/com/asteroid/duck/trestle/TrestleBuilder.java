@@ -20,13 +20,18 @@ public class TrestleBuilder {
     ResourceLocator locator;
     boolean readonly = true;
 
-    private static boolean isComment(String line) {
-        return line.startsWith("#");
+    public TrestleBuilder onPort(int port) {
+        this.port = port;
+        return this;
     }
-
 
     public TrestleBuilder withResources(ResourceLocator resourceLocator) {
         locator = resourceLocator;
+        return this;
+    }
+
+    public TrestleBuilder readOnly(boolean readonly) {
+        this.readonly = readonly;
         return this;
     }
 

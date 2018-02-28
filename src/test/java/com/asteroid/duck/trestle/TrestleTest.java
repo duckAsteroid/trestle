@@ -15,7 +15,11 @@ import javax.ws.rs.core.Response;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import static javax.ws.rs.core.Response.Status.Family.*;
+import static org.hamcrest.CoreMatchers.equalTo;
 import static org.junit.Assert.*;
+import static org.valid4j.matchers.http.HttpResponseMatchers.*;
+import static com.jayway.jsonpath.matchers.JsonPathMatchers.*;
 
 public class TrestleTest {
     private Trestle subject;
@@ -38,14 +42,12 @@ public class TrestleTest {
     public void testGetPet() {
         WebTarget petEndpoint = petStoreEndpoint.path("pet/dave.json");
         Response response = petEndpoint.request().get();
-        assertNotNull(response);
-        assertEquals(200, response.getStatus());
-        String entity = response.readEntity(String.class);
-        assertTrue(entity.length() > 0);
-        JSONObject jsonObject = new JSONObject(entity);
-        assertNotNull(jsonObject);
-        assertTrue(jsonObject.has("id"));
-        assertEquals(2, jsonObject.get("id"));
+        assertThat(response, hasStatusCode(ofFamily(SUCCESSFUL)));
+        String json = response.readEntity(String.class);
+
+        assertThat(json, isJson(
+                withJsonPath("$.id", equalTo(2))
+        ));
     }
 
 
@@ -53,14 +55,12 @@ public class TrestleTest {
     public void testGetOrder() {
         WebTarget petEndpoint = petStoreEndpoint.path("store/order/1.json");
         Response response = petEndpoint.request().get();
-        assertNotNull(response);
-        assertEquals(200, response.getStatus());
-        String entity = response.readEntity(String.class);
-        assertTrue(entity.length() > 0);
-        JSONObject jsonObject = new JSONObject(entity);
-        assertNotNull(jsonObject);
-        assertTrue(jsonObject.has("id"));
-        assertEquals(1, jsonObject.get("id"));
+        assertThat(response, hasStatusCode(ofFamily(SUCCESSFUL)));
+        String json = response.readEntity(String.class);
+
+        assertThat(json, isJson(
+                withJsonPath("$.id", equalTo(1))
+        ));
     }
 
     @After
